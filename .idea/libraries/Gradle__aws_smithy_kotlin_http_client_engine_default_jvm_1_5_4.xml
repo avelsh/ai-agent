@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: aws.smithy.kotlin:http-client-engine-default-jvm:1.5.4" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="aws.smithy.kotlin" artifactId="http-client-engine-default-jvm" version="1.5.4" baseVersion="1.5.4" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/aws.smithy.kotlin/http-client-engine-default-jvm/1.5.4/70fee581a96c70d4ebc9e9d76fd20e3e38f8a964/http-client-engine-default-jvm-1.5.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

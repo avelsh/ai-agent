@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: ai.koog:prompt-structure-jvm:0.4.2-feat-1-3" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="ai.koog" artifactId="prompt-structure-jvm" version="0.4.2-feat-1-3" baseVersion="0.4.2-feat-1-3" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ai.koog/prompt-structure-jvm/0.4.2-feat-1-3/255be3f3982648a9f41c6351cf048f64441522f/prompt-structure-jvm-0.4.2-feat-1-3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

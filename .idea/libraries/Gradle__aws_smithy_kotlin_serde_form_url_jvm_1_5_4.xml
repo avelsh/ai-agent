@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: aws.smithy.kotlin:serde-form-url-jvm:1.5.4" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="aws.smithy.kotlin" artifactId="serde-form-url-jvm" version="1.5.4" baseVersion="1.5.4" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/aws.smithy.kotlin/serde-form-url-jvm/1.5.4/f8419fc9226414064dfe53014752e74eeeb4741a/serde-form-url-jvm-1.5.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

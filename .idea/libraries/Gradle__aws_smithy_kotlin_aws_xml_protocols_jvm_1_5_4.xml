@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: aws.smithy.kotlin:aws-xml-protocols-jvm:1.5.4" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="aws.smithy.kotlin" artifactId="aws-xml-protocols-jvm" version="1.5.4" baseVersion="1.5.4" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/aws.smithy.kotlin/aws-xml-protocols-jvm/1.5.4/8b939b7680281984c0565e0d64fa21fe19732498/aws-xml-protocols-jvm-1.5.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

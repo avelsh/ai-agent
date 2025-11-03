@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: aws.smithy.kotlin:aws-protocol-core-jvm:1.5.4" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="aws.smithy.kotlin" artifactId="aws-protocol-core-jvm" version="1.5.4" baseVersion="1.5.4" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/aws.smithy.kotlin/aws-protocol-core-jvm/1.5.4/3d14d060ab64496bc204b28b07286b6d9c5ffe4c/aws-protocol-core-jvm-1.5.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

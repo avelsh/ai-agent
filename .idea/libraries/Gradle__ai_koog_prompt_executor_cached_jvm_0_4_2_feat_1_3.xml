@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: ai.koog:prompt-executor-cached-jvm:0.4.2-feat-1-3" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="ai.koog" artifactId="prompt-executor-cached-jvm" version="0.4.2-feat-1-3" baseVersion="0.4.2-feat-1-3" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ai.koog/prompt-executor-cached-jvm/0.4.2-feat-1-3/d47c007dae3f30081d9623e6db790ae7fca01557/prompt-executor-cached-jvm-0.4.2-feat-1-3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
