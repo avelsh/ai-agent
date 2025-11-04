@@ -26,6 +26,7 @@ suspend fun main() {
                 //LLMProvider.OpenAI to OpenAILLMClient(openAiKey),
             ),
             privateYoutrackClient = PrivateYoutrackClient(youtrackUrl, youtrackToken),
+            youtrackBaseUrl = youtrackUrl,
             youtrackMcpRegistry = McpToolRegistryProvider.fromTransport(youtrackMcp),
             onToolCallEvent = { println("Tool called: $it") },
             showMessage = {

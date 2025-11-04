@@ -2,6 +2,7 @@ package ai.koog.agent.findrules
 
 import ai.koog.agent.findrules.api.PrivateYoutrackClient
 import ai.koog.agent.findrules.tools.PrivateYoutrackTools
+import ai.koog.agent.findrules.tools.YoutrackLinkTools
 import ai.koog.agents.core.agent.AIAgent
 import ai.koog.agents.core.agent.config.AIAgentConfig
 import ai.koog.agents.core.agent.entity.createStorageKey
@@ -27,12 +28,14 @@ import ai.koog.prompt.xml.xml
 fun createRulesExplanationAgent(
     promptExecutor: PromptExecutor,
     privateYoutrackClient: PrivateYoutrackClient,
+    youtrackBaseUrl: String,
     youtrackMcpRegistry: ToolRegistry,
     onToolCallEvent: (String) -> Unit,
     showMessage: suspend (String) -> String,
 ): AIAgent<UserInput, UserInputToAgent> {
     val youtrackTools = youtrackMcpRegistry.tools
     val privateYoutrackTools = PrivateYoutrackTools(privateYoutrackClient)
+    val youtrackLinkTools = YoutrackLinkTools(youtrackBaseUrl)
     val userTools = UserTools(
         showMessage
     )
@@ -40,11 +43,13 @@ fun createRulesExplanationAgent(
     val toolRegistry = ToolRegistry {
         tools(userTools)
         tools(privateYoutrackTools)
+        tools(youtrackLinkTools)
     } + youtrackMcpRegistry
 
     val findRulesStrategy = findRulesStrategy(
         youtrackTools = youtrackTools,
         privateYoutrackTools = privateYoutrackTools,
+        youtrackLinkTools = youtrackLinkTools,
         userTools = userTools
     )
 
@@ -59,7 +64,7 @@ fun createRulesExplanationAgent(
                 """.trimIndent()
             )
         },
-        model = GoogleModels.Gemini2_5Pro,
+        model = GoogleModels.Gemini2_0FlashLite,
         maxAgentIterations = 200
     )
 
@@ -86,6 +91,7 @@ fun createRulesExplanationAgent(
 private fun findRulesStrategy(
     youtrackTools: List<Tool<*, *>>,
     privateYoutrackTools: PrivateYoutrackTools,
+    youtrackLinkTools: YoutrackLinkTools,
     userTools: UserTools
 ) = strategy<UserInput, UserInputToAgent>("find-rules-strategy") {
     val userInputKey = createStorageKey<UserInputToAgent>("user_input")
@@ -113,7 +119,7 @@ private fun findRulesStrategy(
     }
 
     val suggestExplanation by subgraphWithTask<SuggestExplanationRequest, UserInputToAgent>(
-        tools = youtrackTools + privateYoutrackTools.asTools()
+        tools = youtrackTools + privateYoutrackTools.asTools() + youtrackLinkTools.asTools()
     ) { input ->
         xml {
             tag("instructions") {
@@ -126,20 +132,21 @@ private fun findRulesStrategy(
 
                     h2("Tool usage guidelines")
                     +"""
-                    ALWAYS use ${
-                        privateYoutrackTools.asTools().joinToString(", ") { it.name }
-                    } tool to get available workflow rules AVOID making your own suggestions.                                                     
+                    ALWAYS use the getWorkflowRules tool to get available workflow rules from YouTrack 
+                    and find the rule that may cause the user problem. Avoid making your own suggestions.                                                     
+                    """.trimIndent()
+                    br()
+
+                    h2("Link building tool")
+                    +"""
+                    ALWAYS use  the buildWorkflowRuleLink tool to build the link to the workflow rule.
+                    Args: projectNameOrKey (string), workflowId (string).
+                    Example: buildWorkflowRuleLink("PROJECT_NAME", "123-56")
                     """.trimIndent()
                     br()
 
                     """
                     Use other tools from YouTrack to get more context/information.
-                    """.trimIndent()
-
-                    h2("Link format guidelines")
-                    """
-                    Provided link must be in the following format: 
-                    https://<Company ID>.youtrack.cloud/projects/<Project Name>?tab=workflow&selected=<Workflow ID>
                     """.trimIndent()
                 }
             }

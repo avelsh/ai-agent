@@ -57,7 +57,7 @@ class PrivateYoutrackClient(
             parameter("fields", "id,name,rules(id,title,script)")
             parameter("top", "-1")
         }.body()
-        println(response)
+
         return response
     }
 }
