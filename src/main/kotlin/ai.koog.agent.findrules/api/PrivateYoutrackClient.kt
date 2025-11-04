@@ -29,7 +29,10 @@ data class YoutrackWorkflowRule(
 /**
  * Client for interacting with the Private Youtrack API
  */
-class PrivateYoutrackClient() {
+class PrivateYoutrackClient(
+    private val youtrackUrl: String,
+    private val youtrackToken: String
+) {
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
             json(Json {
@@ -44,13 +47,16 @@ class PrivateYoutrackClient() {
      *
      */
     suspend fun getWorkflowRules(): List<YoutrackWorkflow> {
-        val response: List<YoutrackWorkflow> = client.get("https://ai-agent.youtrack.cloud/api/admin/workflows") {
-            header("Authorization", "Bearer perm-YWRtaW4=.NDEtMA==.iEWw3U3bH62WzOC8BBqkvZzz0PFGO0")
+        val baseUrl: String = (youtrackUrl ?: error("YOUTRACK_URL is not set"))
+            .removeSuffix("/")
+        val token: String = youtrackToken ?: error("YOUTRACK_API_TOKEN is not set")
+
+        val response: List<YoutrackWorkflow> = client.get("$youtrackUrl/api/admin/workflows") {
+            header("Authorization", "Bearer $youtrackToken")
             header("Accept", "application/json")
             parameter("fields", "id,name,rules(id,title,script)")
             parameter("top", "-1")
         }.body()
-        println("response")
         println(response)
         return response
     }

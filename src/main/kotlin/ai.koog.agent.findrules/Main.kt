@@ -18,7 +18,6 @@ suspend fun main() {
 
     val youtrackMcp = createYoutrackMcp(youtrackUrl, youtrackToken)
 
-
     try {
         // Create agent
         val agent = createRulesExplanationAgent(
@@ -26,7 +25,7 @@ suspend fun main() {
                 LLMProvider.Google to GoogleLLMClient(googleAiKey),
                 //LLMProvider.OpenAI to OpenAILLMClient(openAiKey),
             ),
-            privateYoutrackClient = PrivateYoutrackClient(),
+            privateYoutrackClient = PrivateYoutrackClient(youtrackUrl, youtrackToken),
             youtrackMcpRegistry = McpToolRegistryProvider.fromTransport(youtrackMcp),
             onToolCallEvent = { println("Tool called: $it") },
             showMessage = {
