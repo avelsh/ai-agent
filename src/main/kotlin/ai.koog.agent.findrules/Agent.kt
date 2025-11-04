@@ -64,7 +64,7 @@ fun createRulesExplanationAgent(
                 """.trimIndent()
             )
         },
-        model = GoogleModels.Gemini2_0FlashLite,
+        model = GoogleModels.Gemini2_5Pro,
         maxAgentIterations = 200
     )
 

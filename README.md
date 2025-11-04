@@ -12,6 +12,11 @@ Kotlin-based AI agent using the Koog framework to help users understand YouTrack
 - Integrates with YouTrack via:
   - MCP (Model Context Protocol) for YouTrack tools
   - Direct API calls via PrivateYoutrackClient for workflow rules
+  - Link generation tool (YoutrackLinkTools) to build correct rule URLs
+
+## Schema
+
+![YouTrack Rules Explanation Agent Schema](./assets/youtrack-ai-agent.svg)
 
 ## Setup
 
@@ -72,7 +77,8 @@ ai-agent/
 │       │   └── PrivateYoutrackClient.kt  # Direct YouTrack API client for workflows
 │       └── tools/
 │           ├── UserTools.kt              # User interaction tools (showMessage)
-│           └── PrivateYoutrackTools.kt   # YouTrack workflow rules fetching tool
+│           ├── PrivateYoutrackTools.kt   # YouTrack workflow rules fetching tool
+│           └── YoutrackLinkTools.kt      # Builds UI links to workflow rules
 ├── build.gradle.kts                     # Gradle build configuration
 ├── gradle/
 │   ├── libs.versions.toml                # Dependency version catalog
@@ -82,12 +88,12 @@ ai-agent/
 └── README.md                             # This file
 ```
 
-## How It Works
 
 1. **Agent Initialization**: The agent is created with:
    - Google Gemini AI (Gemini 2.5 Pro via PromptExecutor)
    - YouTrack MCP tools (via ToolRegistry for general YouTrack operations)
    - PrivateYoutrackClient (direct API calls for workflow rules)
+   - YoutrackLinkTools (builds correct UI links for workflow rules)
    - User interaction tools (for asking clarifying questions)
 
 2. **Interactive Flow**:
@@ -97,10 +103,11 @@ ai-agent/
    - Agent analyzes the problem and provides explanation with workflow rule links
    - User can provide feedback to refine the explanation
 
-3. **Workflow Rules Fetching**: The agent uses:
+3. **Workflow Rules & Link Building**: The agent uses:
    - `PrivateYoutrackClient` to directly call YouTrack API `/api/admin/workflows` endpoint
    - Fetches workflows with their rules (id, name, title, script, type)
    - Formats the results in a readable markdown format for the LLM
+   - `YoutrackLinkTools.buildWorkflowRuleLink(projectNameOrKey, workflowId)` to construct links like: `https://<company>.youtrack.cloud/projects/<Project Name>?tab=workflow&selected=<Workflow ID>`
 
 4. **MCP Integration**: The agent uses YouTrack MCP server via `npx mcp-remote` to access additional YouTrack tools and data
 
@@ -124,8 +131,8 @@ ai-agent/
 | Variable | Description | Required | Default |
 |----------|-------------|----------|---------|
 | `GOOGLE_AI_API_KEY` | Google AI API key for Gemini | Yes | - |
-| `YOUTRACK_API_TOKEN` | YouTrack API token | Yes | - |
-| `YOUTRACK_URL` | YouTrack instance URL | Yes | - |
+| `YOUTRACK_API_TOKEN` | YouTrack API token (value without "Bearer ") | Yes | - |
+| `YOUTRACK_URL` | YouTrack instance URL (e.g. https://your-company.youtrack.cloud) | Yes | - |
 
 ### Dependencies
 
@@ -162,6 +169,11 @@ echo $GOOGLE_AI_API_KEY
 echo $YOUTRACK_API_TOKEN
 echo $YOUTRACK_URL
 ```
+
+### Wrong or empty workflow results
+
+- Ensure the provided `YOUTRACK_API_TOKEN` has permission to access `/api/admin/workflows`.
+- Ensure `YOUTRACK_URL` points to your instance and is correct (no trailing slash required).
 
 ### LLM Token Limit Issues
 
