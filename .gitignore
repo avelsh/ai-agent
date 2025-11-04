@@ -1,0 +1,13 @@
+# IntelliJ/Android Studio
+.idea/
+*.iml
+
+# macOS
+.DS_Store
+
+# Gradle
+.gradle/
+build/
+out/
+.kotlinc/
+*.log
